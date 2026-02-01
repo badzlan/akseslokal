@@ -1,5 +1,8 @@
 import { Eye, Ear, Accessibility, Brain, Heart } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
+import ScrollReveal from '@/components/ui/ScrollReveal';
+import ParallaxBackground from '@/components/ui/ParallaxBackground';
+import ParallaxSection from '@/components/ui/ParallaxSection';
 
 const Difabel = () => {
   const difabelTypes = [
@@ -85,84 +88,100 @@ const Difabel = () => {
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background section-padding">
-          <div className="container-custom">
+          <ParallaxBackground variant="vibrant" shapesCount={5} />
+          
+          <div className="container-custom relative">
             <div className="max-w-3xl mx-auto text-center">
-              <span className="badge-neutral mb-4 animate-fade-in">Edukasi</span>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 animate-fade-in-up">
-                Mengenal <span className="gradient-text">Tipe Difabel</span>
-              </h1>
-              <p className="text-lg text-muted-foreground animate-fade-in-up animation-delay-100">
-                Memahami berbagai jenis disabilitas adalah langkah pertama untuk menciptakan lingkungan yang inklusif bagi semua orang.
-              </p>
+              <ScrollReveal animation="fade-down">
+                <span className="badge-neutral mb-4">Edukasi</span>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-up" delay={100}>
+                <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                  Mengenal <span className="gradient-text">Tipe Difabel</span>
+                </h1>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-up" delay={200}>
+                <p className="text-lg text-muted-foreground">
+                  Memahami berbagai jenis disabilitas adalah langkah pertama untuk menciptakan lingkungan yang inklusif bagi semua orang.
+                </p>
+              </ScrollReveal>
             </div>
           </div>
         </section>
 
         {/* Difabel Types */}
-        <section className="section-padding bg-background">
-          <div className="container-custom">
+        <section className="section-padding bg-background relative">
+          <ParallaxBackground variant="subtle" shapesCount={3} className="fixed" />
+          
+          <div className="container-custom relative">
             <div className="space-y-8">
               {difabelTypes.map((type, index) => (
-                <div
-                  key={type.title}
-                  className="card-base overflow-hidden animate-fade-in-up opacity-0"
-                  style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
+                <ScrollReveal 
+                  key={type.title} 
+                  animation={index % 2 === 0 ? "fade-right" : "fade-left"} 
+                  delay={100}
                 >
-                  <div className="grid md:grid-cols-3 gap-0">
-                    {/* Icon & Title */}
-                    <div className={`p-8 ${type.color} text-white flex flex-col justify-center`}>
-                      <type.icon className="w-16 h-16 mb-4 opacity-90" />
-                      <h2 className="font-heading font-bold text-2xl mb-1">{type.title}</h2>
-                      <p className="text-white/80 text-sm">{type.subtitle}</p>
-                      <div className="mt-4 pt-4 border-t border-white/20">
-                        <p className="text-3xl font-bold">{type.percentage}</p>
-                        <p className="text-sm text-white/70">dari populasi Indonesia</p>
+                  <div className="card-base card-hover overflow-hidden">
+                    <div className="grid md:grid-cols-3 gap-0">
+                      {/* Icon & Title */}
+                      <div className={`p-8 ${type.color} text-white flex flex-col justify-center`}>
+                        <type.icon className="w-16 h-16 mb-4 opacity-90" />
+                        <h2 className="font-heading font-bold text-2xl mb-1">{type.title}</h2>
+                        <p className="text-white/80 text-sm">{type.subtitle}</p>
+                        <div className="mt-4 pt-4 border-t border-white/20">
+                          <p className="text-3xl font-bold">{type.percentage}</p>
+                          <p className="text-sm text-white/70">dari populasi Indonesia</p>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Description */}
-                    <div className="p-8 md:col-span-2">
-                      <p className="text-muted-foreground mb-6 leading-relaxed">
-                        {type.description}
-                      </p>
+                      {/* Description */}
+                      <div className="p-8 md:col-span-2">
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          {type.description}
+                        </p>
 
-                      <h3 className="font-heading font-semibold text-foreground mb-4">
-                        Kebutuhan Aksesibilitas:
-                      </h3>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {type.needs.map((need, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl"
-                          >
-                            <div className={`w-2 h-2 rounded-full ${type.color}`} />
-                            <span className="text-sm text-foreground">{need}</span>
-                          </div>
-                        ))}
+                        <h3 className="font-heading font-semibold text-foreground mb-4">
+                          Kebutuhan Aksesibilitas:
+                        </h3>
+                        <div className="grid sm:grid-cols-2 gap-3">
+                          {type.needs.map((need, i) => (
+                            <div
+                              key={i}
+                              className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl transition-transform hover:scale-[1.02]"
+                            >
+                              <div className={`w-2 h-2 rounded-full ${type.color}`} />
+                              <span className="text-sm text-foreground">{need}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
         </section>
 
         {/* Important Note */}
-        <section className="section-padding bg-muted/30">
+        <ParallaxSection className="section-padding" backgroundColor="hsl(var(--muted) / 0.3)" speed={0.1}>
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="card-base p-8">
-                <h2 className="text-2xl font-heading font-bold text-foreground mb-4">
-                  Penting untuk Diingat
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Setiap individu dengan disabilitas memiliki kebutuhan yang unik. Klasifikasi di atas adalah panduan umum - selalu tanyakan langsung kepada individu tersebut tentang kebutuhan spesifik mereka. Yang terpenting adalah memperlakukan setiap orang dengan hormat dan martabat.
-                </p>
-              </div>
+              <ScrollReveal animation="zoom-in">
+                <div className="card-base p-8">
+                  <h2 className="text-2xl font-heading font-bold text-foreground mb-4">
+                    Penting untuk Diingat
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Setiap individu dengan disabilitas memiliki kebutuhan yang unik. Klasifikasi di atas adalah panduan umum - selalu tanyakan langsung kepada individu tersebut tentang kebutuhan spesifik mereka. Yang terpenting adalah memperlakukan setiap orang dengan hormat dan martabat.
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
-        </section>
+        </ParallaxSection>
       </div>
     </Layout>
   );

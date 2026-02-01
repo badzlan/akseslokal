@@ -1,5 +1,8 @@
 import { CheckCircle, AlertTriangle, Ruler, DoorOpen, ArrowUpRight, Square } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
+import ScrollReveal from '@/components/ui/ScrollReveal';
+import ParallaxBackground from '@/components/ui/ParallaxBackground';
+import ParallaxSection from '@/components/ui/ParallaxSection';
 
 const Tips = () => {
   const tips = [
@@ -70,21 +73,31 @@ const Tips = () => {
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background section-padding">
-          <div className="container-custom">
+          <ParallaxBackground variant="default" shapesCount={5} />
+          
+          <div className="container-custom relative">
             <div className="max-w-3xl mx-auto text-center">
-              <span className="badge-neutral mb-4 animate-fade-in">Panduan</span>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 animate-fade-in-up">
-                Tips Membangun <span className="gradient-text">Fasilitas Aksesibel</span>
-              </h1>
-              <p className="text-lg text-muted-foreground animate-fade-in-up animation-delay-100">
-                Panduan praktis untuk menciptakan bangunan dan fasilitas publik yang ramah bagi semua orang
-              </p>
+              <ScrollReveal animation="fade-down">
+                <span className="badge-neutral mb-4">Panduan</span>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-up" delay={100}>
+                <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                  Tips Membangun <span className="gradient-text">Fasilitas Aksesibel</span>
+                </h1>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-up" delay={200}>
+                <p className="text-lg text-muted-foreground">
+                  Panduan praktis untuk menciptakan bangunan dan fasilitas publik yang ramah bagi semua orang
+                </p>
+              </ScrollReveal>
             </div>
           </div>
         </section>
 
         {/* Tips Sections */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-background relative">
           <div className="container-custom">
             <div className="space-y-16">
               {tips.map((tip, index) => (
@@ -94,46 +107,57 @@ const Tips = () => {
                     index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
-                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                        <tip.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <h2 className="text-2xl font-heading font-bold text-foreground">
-                        {tip.title}
-                      </h2>
-                    </div>
-                    
-                    <div className="space-y-3">
-                      {tip.items.map((item, i) => (
-                        <div
-                          key={i}
-                          className={`flex items-start gap-3 p-3 rounded-xl ${
-                            item.correct ? 'bg-success/5' : 'bg-destructive/5'
-                          }`}
-                        >
-                          {item.correct ? (
-                            <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                          ) : (
-                            <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                          )}
-                          <span className={`text-sm ${item.correct ? 'text-foreground' : 'text-destructive'}`}>
-                            {item.text}
-                          </span>
+                  <ScrollReveal 
+                    animation={index % 2 === 0 ? "fade-right" : "fade-left"} 
+                    delay={100}
+                    className={index % 2 === 1 ? 'lg:order-2' : ''}
+                  >
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                          <tip.icon className="w-6 h-6 text-primary" />
                         </div>
-                      ))}
+                        <h2 className="text-2xl font-heading font-bold text-foreground">
+                          {tip.title}
+                        </h2>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        {tip.items.map((item, i) => (
+                          <ScrollReveal key={i} animation="fade-up" delay={i * 50}>
+                            <div
+                              className={`flex items-start gap-3 p-3 rounded-xl transition-transform hover:scale-[1.02] ${
+                                item.correct ? 'bg-success/5' : 'bg-destructive/5'
+                              }`}
+                            >
+                              {item.correct ? (
+                                <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                              )}
+                              <span className={`text-sm ${item.correct ? 'text-foreground' : 'text-destructive'}`}>
+                                {item.text}
+                              </span>
+                            </div>
+                          </ScrollReveal>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </ScrollReveal>
 
-                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <ScrollReveal 
+                    animation="zoom-in" 
+                    delay={200}
+                    className={index % 2 === 1 ? 'lg:order-1' : ''}
+                  >
                     <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
                       <img
                         src={tip.image}
                         alt={tip.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                       />
                     </div>
-                  </div>
+                  </ScrollReveal>
                 </div>
               ))}
             </div>
@@ -141,55 +165,63 @@ const Tips = () => {
         </section>
 
         {/* Quick Tips */}
-        <section className="section-padding bg-muted/30">
+        <ParallaxSection className="section-padding" backgroundColor="hsl(var(--muted) / 0.3)" speed={0.1}>
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-heading font-bold text-foreground mb-8 text-center">
-                Tips Singkat Lainnya
-              </h2>
+              <ScrollReveal animation="fade-up">
+                <h2 className="text-3xl font-heading font-bold text-foreground mb-8 text-center">
+                  Tips Singkat Lainnya
+                </h2>
+              </ScrollReveal>
+              
               <div className="grid md:grid-cols-2 gap-4">
                 {quickTips.map((tip, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border"
-                  >
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
-                    <span className="text-foreground">{tip}</span>
-                  </div>
+                  <ScrollReveal key={index} animation="fade-up" delay={index * 75}>
+                    <div className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border transition-all hover:shadow-md hover:scale-[1.02]">
+                      <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                      <span className="text-foreground">{tip}</span>
+                    </div>
+                  </ScrollReveal>
                 ))}
               </div>
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
         {/* Infographic Section */}
-        <section className="section-padding bg-foreground text-background">
+        <ParallaxSection
+          className="section-padding"
+          backgroundImage="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920"
+          overlay
+          overlayOpacity={0.9}
+          speed={0.2}
+        >
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-heading font-bold mb-8 text-center">
-                Standar Ukuran Penting
-              </h2>
+              <ScrollReveal animation="fade-down">
+                <h2 className="text-3xl font-heading font-bold mb-8 text-center text-primary-foreground">
+                  Standar Ukuran Penting
+                </h2>
+              </ScrollReveal>
+              
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center p-6 bg-background/10 rounded-2xl">
-                  <p className="text-4xl font-bold text-primary mb-2">90cm</p>
-                  <p className="text-background/70 text-sm">Lebar ramp minimum</p>
-                </div>
-                <div className="text-center p-6 bg-background/10 rounded-2xl">
-                  <p className="text-4xl font-bold text-primary mb-2">80cm</p>
-                  <p className="text-background/70 text-sm">Lebar pintu minimum</p>
-                </div>
-                <div className="text-center p-6 bg-background/10 rounded-2xl">
-                  <p className="text-4xl font-bold text-primary mb-2">150cm</p>
-                  <p className="text-background/70 text-sm">Ruang putar toilet</p>
-                </div>
-                <div className="text-center p-6 bg-background/10 rounded-2xl">
-                  <p className="text-4xl font-bold text-primary mb-2">1:12</p>
-                  <p className="text-background/70 text-sm">Rasio kemiringan ideal</p>
-                </div>
+                {[
+                  { value: '90cm', label: 'Lebar ramp minimum' },
+                  { value: '80cm', label: 'Lebar pintu minimum' },
+                  { value: '150cm', label: 'Ruang putar toilet' },
+                  { value: '1:12', label: 'Rasio kemiringan ideal' },
+                ].map((item, index) => (
+                  <ScrollReveal key={item.value} animation="fade-up" delay={index * 100}>
+                    <div className="text-center p-6 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm transition-transform hover:scale-105">
+                      <p className="text-4xl font-bold text-primary mb-2">{item.value}</p>
+                      <p className="text-primary-foreground/70 text-sm">{item.label}</p>
+                    </div>
+                  </ScrollReveal>
+                ))}
               </div>
             </div>
           </div>
-        </section>
+        </ParallaxSection>
       </div>
     </Layout>
   );
